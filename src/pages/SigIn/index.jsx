@@ -1,7 +1,8 @@
+import Layout from "../../components/Layout";
 function SigIn() {
   return (
     <>
-      <div className="bg-red-100">SigIn</div>
+      <Layout>SigIn</Layout>
     </>
   );
 }
