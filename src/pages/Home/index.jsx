@@ -1,9 +1,12 @@
+import Card from "../../components/Card";
 import Layout from "../../components/Layout";
 
 function Home() {
   return (
     <>
-      <Layout>home</Layout>
+      <Layout>
+        <Card />
+      </Layout>
     </>
   );
 }
