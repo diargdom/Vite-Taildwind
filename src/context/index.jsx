@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 const ShoppingCartContext = createContext();
 
-const ShoppingCartProvider = ({ children }) => {
+function ShoppingCartProvider({ children }) {
   return (
     <>
       <ShoppingCartContext.Provider value={{}}>
@@ -11,7 +11,7 @@ const ShoppingCartProvider = ({ children }) => {
       </ShoppingCartContext.Provider>
     </>
   );
-};
+}
 
 ShoppingCartProvider.prototypes = {
   children: PropTypes.node.isRequired,
