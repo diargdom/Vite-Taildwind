@@ -1,6 +1,11 @@
+import { useContext } from "react";
+import { ShoppingCartContext } from "../../context";
+
 function Card(data) {
+  const context = useContext(ShoppingCartContext);
+
   const cleanImageUrl = (url) => {
-    const urlReplace = url.replace(/["\[\]]/g, "");
+    const urlReplace = url.replace(/["[\]]/g, "");
     return urlReplace;
   };
 
@@ -19,7 +24,10 @@ function Card(data) {
           src={imageUrl}
           alt={data.data.title}
         />
-        <div className="absolute top-0 right-0 flex justify-center items-center bg-white w-6 h-6 rounded-full m-2 p-1">
+        <div
+          className="absolute top-0 right-0 flex justify-center items-center bg-white w-6 h-6 rounded-full m-2 p-1"
+          onClick={() => context.setCount(context.count + 1)}
+        >
           +
         </div>
       </figure>

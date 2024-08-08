@@ -1,19 +1,25 @@
-import { createContext } from "react";
+import { createContext, useState } from "react";
 import PropTypes from "prop-types";
 
-const ShoppingCartContext = createContext();
+export const ShoppingCartContext = createContext();
 
 function ShoppingCartProvider({ children }) {
+  const [count, setCount] = useState(0);
   return (
     <>
-      <ShoppingCartContext.Provider value={{}}>
+      <ShoppingCartContext.Provider
+        value={{
+          count,
+          setCount,
+        }}
+      >
         {children}
       </ShoppingCartContext.Provider>
     </>
   );
 }
 
-ShoppingCartProvider.prototypes = {
+ShoppingCartProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
