@@ -20,8 +20,11 @@ function ShoppingCartProvider({ children }) {
   //---Product Detail . Show Product
   const [productoToShow, setProductoToShow] = useState({});
 
-  //---Shopping Card . Add Product to cards
+  //---Shopping Cart . Add Product to cards
   const [cardProducts, setCardProducts] = useState([]);
+
+  //---Shopping Cart . Order
+  const [order, setOrder] = useState([]);
 
   return (
     <>
@@ -39,6 +42,8 @@ function ShoppingCartProvider({ children }) {
           isCheckoutSideMenuOpen,
           openCheckoutSideMenu,
           closeCheckoutSideMenu,
+          order,
+          setOrder,
         }}
       >
         {children}
