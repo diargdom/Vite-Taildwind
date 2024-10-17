@@ -28,15 +28,26 @@ function ShoppingCartProvider({ children }) {
 
   //---Get products
   const [items, setItems] = useState(null);
+  const [filterItems, setFilterItems] = useState(null);
   //---Get products by tittle
   const [searchByTitle, setSearchByTitle] = useState(null);
-  console.log("🚀 ~ ShoppingCartProvider ~ searchByTitle:", searchByTitle);
 
   useEffect(() => {
     fetch("https://api.escuelajs.co/api/v1/products")
       .then((response) => response.json())
       .then((data) => setItems(data));
   }, []);
+
+  const filteredItemBytitle = (items, setSearchByTitle) => {
+    return items?.filter((item) =>
+      item.title.toLowerCase().includes(setSearchByTitle.toLowerCase())
+    );
+  };
+
+  useEffect(() => {
+    if (searchByTitle)
+      setFilterItems(filteredItemBytitle(items, searchByTitle));
+  }, [items, searchByTitle]);
 
   return (
     <>
@@ -60,6 +71,7 @@ function ShoppingCartProvider({ children }) {
           setItems,
           searchByTitle,
           setSearchByTitle,
+          filterItems,
         }}
       >
         {children}
