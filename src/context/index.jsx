@@ -31,6 +31,8 @@ function ShoppingCartProvider({ children }) {
   const [filterItems, setFilterItems] = useState(null);
   //---Get products by tittle
   const [searchByTitle, setSearchByTitle] = useState(null);
+  //---Get products by category
+  const [searchByCategory, setSearchByCategory] = useState(null);
 
   useEffect(() => {
     fetch("https://api.escuelajs.co/api/v1/products")
@@ -38,16 +40,57 @@ function ShoppingCartProvider({ children }) {
       .then((data) => setItems(data));
   }, []);
 
-  const filteredItemBytitle = (items, setSearchByTitle) => {
+  const filteredItemBytitle = (items, searchByTitle) => {
     return items?.filter((item) =>
-      item.title.toLowerCase().includes(setSearchByTitle.toLowerCase())
+      item.title.toLowerCase().includes(searchByTitle.toLowerCase())
     );
   };
 
+  const filteredItemByCategory = (items, searchByCategory) => {
+    return items?.filter((item) =>
+      item.category.name.toLowerCase().includes(searchByCategory.toLowerCase())
+    );
+  };
+
+  const filterBy = (searchType, items, searchByTitle, searchByCategory) => {
+    if (searchType === "BT_TITTLE") {
+      return filteredItemBytitle(items, searchByTitle);
+    }
+    if (searchType === "BT_CATEGORY") {
+      return filteredItemByCategory(items, searchByCategory);
+    }
+    if (searchType === "BT_TITTLE_AND_CATEGORY") {
+      return filteredItemByCategory(items, searchByCategory).filter((item) =>
+        item.title.toLowerCase().includes(searchByTitle.toLowerCase())
+      );
+    }
+    if (!searchType) {
+      return items;
+    }
+  };
+
   useEffect(() => {
-    if (searchByTitle)
-      setFilterItems(filteredItemBytitle(items, searchByTitle));
-  }, [items, searchByTitle]);
+    if (searchByTitle && searchByCategory)
+      setFilterItems(
+        filterBy(
+          "BT_TITTLE_AND_CATEGORY",
+          items,
+          searchByTitle,
+          searchByCategory
+        )
+      );
+    if (searchByTitle && !searchByCategory)
+      setFilterItems(
+        filterBy("BT_TITTLE", items, searchByTitle, searchByCategory)
+      );
+    if (!searchByTitle && searchByCategory)
+      setFilterItems(
+        filterBy("BT_CATEGORY", items, searchByTitle, searchByCategory)
+      );
+    if (!searchByTitle && !searchByCategory)
+      setFilterItems(filterBy(null, items, searchByTitle, searchByCategory));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [items, searchByTitle, searchByCategory]);
 
   return (
     <>
@@ -72,6 +115,8 @@ function ShoppingCartProvider({ children }) {
           searchByTitle,
           setSearchByTitle,
           filterItems,
+          searchByCategory,
+          setSearchByCategory,
         }}
       >
         {children}

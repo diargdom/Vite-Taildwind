@@ -7,16 +7,13 @@ import { ShoppingCartContext } from "../../context";
 function Home() {
   const context = useContext(ShoppingCartContext);
   const renderView = () => {
-    const { searchByTitle, filterItems, items } = context;
+    const { filterItems } = context;
 
-    if (searchByTitle?.length > 0) {
-      return filterItems?.length > 0 ? (
-        filterItems.map((item) => <Card key={item.id} data={item} />)
-      ) : (
-        <div>We dont have anything 😒</div>
-      );
-    }
-    return items?.map((item) => <Card key={item.id} data={item} />);
+    return filterItems?.length > 0 ? (
+      filterItems.map((item) => <Card key={item.id} data={item} />)
+    ) : (
+      <div>We dont have anything 😒</div>
+    );
   };
   return (
     <>
