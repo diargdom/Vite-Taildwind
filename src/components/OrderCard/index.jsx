@@ -9,6 +9,16 @@ function OrderCard({ id, title, images, price, handleDelete }) {
 
   const imageUrl = images[0]?.length > 0 ? cleanImageUrl(images[0]) : "";
 
+  let renderXmarkIcon;
+  if (handleDelete) {
+    renderXmarkIcon = (
+      <XMarkIcon
+        onClick={() => handleDelete(id)}
+        className="h-6 w-6 text-blue-500 cursor-pointer"
+      ></XMarkIcon>
+    );
+  }
+
   return (
     <div className="flex justify-between items-center mb-3">
       <div className="flex items-center gap-2">
@@ -23,10 +33,7 @@ function OrderCard({ id, title, images, price, handleDelete }) {
       </div>
       <div className="flex items-center gap-2">
         <p className="text-lg font-medium">${price}</p>
-        <XMarkIcon
-          onClick={() => handleDelete(id)}
-          className="h-6 w-6 text-blue-500 cursor-pointer"
-        ></XMarkIcon>
+        {renderXmarkIcon}
       </div>
     </div>
   );
